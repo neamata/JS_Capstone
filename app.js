@@ -30,3 +30,66 @@ function renderHeader() {
 }
 
 renderHeader();
+
+
+function initialize() {
+    const signupForm = document.getElementById("signup-form");
+
+    signupForm.addEventListener ("submit", (event) => {
+        event.preventDefault();
+
+        const username = document.getElementById("signup-username").value;
+        const email = document.getElementById("signup-email").value;
+        const password = document.getElementById("signup-password").value;
+
+        // if a user is already registerd with the same email  then show error
+        //or
+        // user is new  = if(user is new)
+        //{ store data to local storage and route to dashboard}
+
+        //for storing data to local storage
+        //create an entry
+        currentUser = {
+            id: Date.now(),
+            username,
+            email,
+            password
+        }
+        localStorage.setItem("user", JSON.stringify(currentUser));
+
+    })
+
+
+}
+
+initialize();
+
+function route() {
+    const hash = window.location.hash || "#";
+    renderHeader();
+
+    if(currentUser) {
+        const page = hash.substring(1) || "dashboard";
+
+        switch(page) {
+            case "dashboard":
+                //renderDashboard();
+                break;
+            case "tasks":
+                //renderTasks();
+                break;
+            case "notes":
+                //rendernotes();
+                break;
+            default:
+                //renderDashboard();
+                }
+    } else {
+        if (hash === "#signup"){
+            //showSignUp()
+        } else {
+            // showLogIn();
+        }
+    }
+}
+
